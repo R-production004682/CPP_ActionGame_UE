@@ -8,6 +8,8 @@
 
 class UCapsuleComponent;
 class USkeletalMeshComponent;
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class ACTIONGAME_CPP_API ABird : public APawn
@@ -24,7 +26,8 @@ public:
 
 protected:
 	virtual void BeginPlay() override;
-
+	void MoveForward(float Value);
+	void MoveRight(float Value);
 
 private:
 
@@ -33,4 +36,10 @@ private:
 
 	UPROPERTY(VisibleAnywhere)
 	USkeletalMeshComponent* BirdMesh;
+
+	UPROPERTY(VisibleAnywhere)
+	USpringArmComponent* CameraBoom;
+
+	UPROPERTY(VisibleAnywhere)
+	UCameraComponent* ViewCamera;
 };
