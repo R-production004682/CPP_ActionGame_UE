@@ -1,5 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
+//テスト
 //アイテムの処理を書く
 
 #include "Items/Item.h"
@@ -9,25 +10,37 @@
 AItem::AItem()
 {
 	PrimaryActorTick.bCanEverTick = true;
+
+	ItemMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("ItemMeshComponent"));
+	RootComponent = ItemMesh;
 }
 
 void AItem::BeginPlay()
 {
 	Super::BeginPlay();
+
+	int32 AvgInt =  Avg<int32>(1, 3);
+	UE_LOG(LogTemp , Warning , TEXT("Avg of 1 and 3 : %d") , AvgInt);
+
+	float AvgFloat = Avg<float>(3.45f, 7.86f);
+	UE_LOG(LogTemp, Warning, TEXT("Avg of 3.45 and 7.86 : %f"), AvgFloat)
 }
+
+float AItem::TransformSin()
+{
+
+	return Amplitude * FMath::Sin(RunningTime * TimeConstant);
+}
+
+float AItem::TransformCos()
+{
+	return Amplitude * FMath::Cos(RunningTime * TimeConstant);
+}
+
 
 void AItem::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	float MovementRate = 50.f;
-	float RotationRate = 45.f;
-
-
-	AddActorWorldOffset(FVector(MovementRate * DeltaTime , 0.f    , 0.f));
-	AddActorWorldRotation(FRotator(0.f , RotationRate * DeltaTime , 0.f));
-
-	DRAW_SPHERE_SingleFrame(GetActorLocation());
-	DRAW_VECTOR_SingleFrame(GetActorLocation() , GetActorLocation() + GetActorForwardVector() * 100.f);
-
+	RunningTime += DeltaTime;
 }
