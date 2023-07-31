@@ -53,7 +53,7 @@ void ABird::Turn(float Value)
 
 void ABird::LookUp(float Value)
 {
-	AddControllerRollInput(Value);
+	AddControllerPitchInput(Value);
 }
 
 void ABird::Tick(float DeltaTime)
