@@ -41,20 +41,20 @@ void ABird::MoveForward(float Value)
 {
 	if (Controller && (Value != 0.f))
 	{
-		FVector Forward = GetActorForwardVector();
+		FVector Forward = GetActorRightVector();
 		AddMovementInput(Forward, Value);
 	}
 }
 
-void ABird::MoveRight(float Value)
+void ABird::Turn(float Value)
 {
-	if (Controller && (Value != 0.f))
-	{
-		FVector Right = GetActorRightVector();
-		AddMovementInput(Right, Value);
-	}
+	AddControllerYawInput(Value);
 }
 
+void ABird::LookUp(float Value)
+{
+	AddControllerRollInput(Value);
+}
 
 void ABird::Tick(float DeltaTime)
 {
@@ -66,7 +66,8 @@ void ABird::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 	PlayerInputComponent->BindAxis(FName("MoveForward"), this , &ABird::MoveForward);
-	PlayerInputComponent->BindAxis(FName("MoveRight")  , this,  &ABird::MoveRight  );
+	PlayerInputComponent->BindAxis(FName("Turn")	   , this , &ABird::Turn);
+	PlayerInputComponent->BindAxis(FName("LookUp")	   , this , &ABird::LookUp);
 
 }
 
